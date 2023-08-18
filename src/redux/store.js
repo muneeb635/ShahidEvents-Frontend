@@ -1,12 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-
 import { setupListeners } from '@reduxjs/toolkit/query';
-import { AdminPanal } from './sevices/adminPanal';
+import { AdminPanal } from './services/slicer';
+import { AdmanPanalAPI } from './services/adminPanalAPI';
 
 export const store = configureStore({
   reducer: {
-    [AdminPanal.reducerPath]: AdminPanal.reducer,
+    adminpanal: AdminPanal,
+    [AdmanPanalAPI.reducerPath]: AdmanPanalAPI.reducer,
   },
-  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(AdminPanal.middleware),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(AdmanPanalAPI.middleware),
 });
 setupListeners(store.dispatch);

@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { filter } from 'lodash';
 import { sentenceCase } from 'change-case';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 // @mui
 import {
   Card,
@@ -22,6 +22,7 @@ import {
   TableContainer,
   TablePagination,
 } from '@mui/material';
+import { useGetAllUserQuery, useUserStatusMutation } from '../redux/services/adminPanalAPI';
 // components
 import Label from '../components/label';
 import Iconify from '../components/iconify';
@@ -35,11 +36,11 @@ import USERLIST from '../_mock/user';
 
 const TABLE_HEAD = [
   { id: 'name', label: 'Name', alignRight: false },
-  { id: 'company', label: 'Company', alignRight: false },
-  { id: 'role', label: 'Role', alignRight: false },
-  { id: 'isVerified', label: 'Verified', alignRight: false },
+  { id: 'email', label: 'Email', alignRight: false },
+  { id: 'phone_number', label: 'Phone Number', alignRight: false },
   { id: 'status', label: 'Status', alignRight: false },
-  { id: '' },
+  { id: 'adress', label: 'Adress', alignRight: false },
+  { id: 'action', label: 'Action', alignRight: false },
 ];
 
 // ----------------------------------------------------------------------
@@ -86,7 +87,7 @@ export default function UserPage() {
 
   const [filterName, setFilterName] = useState('');
 
-  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleOpenMenu = (event) => {
     setOpen(event.currentTarget);
@@ -146,10 +147,28 @@ export default function UserPage() {
 
   const isNotFound = !filteredUsers.length && !!filterName;
 
+  const [allUser, setAllUser] = useState([]);
+  const [userId, setUserId] = useState('');
+
+  const { data: allUserdata, refetch } = useGetAllUserQuery(null);
+  const [userStatus, { data: suspendUserdata }] = useUserStatusMutation();
+  useEffect(() => {
+    if (suspendUserdata) {
+      refetch();
+    }
+  }, [suspendUserdata]);
+
+  useEffect(() => {
+    if (allUserdata) {
+      setAllUser(allUserdata?.data);
+    }
+  }, [allUserdata]);
+  console.log(suspendUserdata);
+
   return (
     <>
       <Helmet>
-        <title> User | Minimal UI </title>
+        <title> User | Talent Hub </title>
       </Helmet>
 
       <Container>
@@ -157,9 +176,6 @@ export default function UserPage() {
           <Typography variant="h4" gutterBottom>
             User
           </Typography>
-          <Button variant="contained" startIcon={<Iconify icon="eva:plus-fill" />}>
-            New User
-          </Button>
         </Stack>
 
         <Card>
@@ -178,37 +194,42 @@ export default function UserPage() {
                   onSelectAllClick={handleSelectAllClick}
                 />
                 <TableBody>
-                  {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
-                    const { id, name, role, status, company, avatarUrl, isVerified } = row;
-                    const selectedUser = selected.indexOf(name) !== -1;
+                  {allUser?.map((user, ind) => {
+                    const selectedUser = selected.indexOf(user?.id) !== -1;
 
                     return (
-                      <TableRow hover key={id} tabIndex={-1} role="checkbox" selected={selectedUser}>
+                      <TableRow hover key={ind} tabIndex={-1} role="checkbox" selected={selectedUser}>
                         <TableCell padding="checkbox">
-                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, name)} />
+                          <Checkbox checked={selectedUser} onChange={(event) => handleClick(event, user?.id)} />
                         </TableCell>
 
                         <TableCell component="th" scope="row" padding="none">
                           <Stack direction="row" alignItems="center" spacing={2}>
-                            <Avatar alt={name} src={avatarUrl} />
+                            <Avatar alt={user?.name ?? 'username'} src={user?.profile_img ?? '0'} />
                             <Typography variant="subtitle2" noWrap>
-                              {name}
+                              {user?.name ?? 'username'}
                             </Typography>
                           </Stack>
                         </TableCell>
 
-                        <TableCell align="left">{company}</TableCell>
+                        <TableCell align="left">{user?.email ?? 'user email'}</TableCell>
 
-                        <TableCell align="left">{role}</TableCell>
-
-                        <TableCell align="left">{isVerified ? 'Yes' : 'No'}</TableCell>
+                        <TableCell align="left">{user?.phone_number ?? 'user phone_number'}</TableCell>
 
                         <TableCell align="left">
-                          <Label color={(status === 'banned' && 'error') || 'success'}>{sentenceCase(status)}</Label>
+                          <Button variant="contained">{user?.status ?? ''}</Button>
                         </TableCell>
 
+                        <TableCell align="left">{user?.address ?? 'user address'}</TableCell>
                         <TableCell align="right">
-                          <IconButton size="large" color="inherit" onClick={handleOpenMenu}>
+                          <IconButton
+                            size="large"
+                            color="inherit"
+                            onClick={(e) => {
+                              handleOpenMenu(e);
+                              setUserId(user?.id);
+                            }}
+                          >
                             <Iconify icon={'eva:more-vertical-fill'} />
                           </IconButton>
                         </TableCell>
@@ -250,9 +271,9 @@ export default function UserPage() {
           </Scrollbar>
 
           <TablePagination
-            rowsPerPageOptions={[5, 10, 25]}
+            rowsPerPageOptions={[10]}
             component="div"
-            count={USERLIST.length}
+            count={allUser.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}
@@ -279,14 +300,31 @@ export default function UserPage() {
           },
         }}
       >
-        <MenuItem>
+        <MenuItem
+          onClick={() => {
+            userStatus({
+              id: userId,
+              status: 'Enable',
+            });
+            handleCloseMenu();
+          }}
+        >
           <Iconify icon={'eva:edit-fill'} sx={{ mr: 2 }} />
-          Edit
+          Enable
         </MenuItem>
 
-        <MenuItem sx={{ color: 'error.main' }}>
+        <MenuItem
+          sx={{ color: 'error.main' }}
+          onClick={() => {
+            userStatus({
+              id: userId,
+              status: 'Disable',
+            });
+            handleCloseMenu();
+          }}
+        >
           <Iconify icon={'eva:trash-2-outline'} sx={{ mr: 2 }} />
-          Delete
+          Disable
         </MenuItem>
       </Popover>
     </>

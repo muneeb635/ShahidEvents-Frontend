@@ -4,6 +4,9 @@ import { faker } from '@faker-js/faker';
 import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
+import { useEffect, useState } from 'react';
+import { useGetAdminAnalyticesQuery } from '../redux/services/adminPanalAPI';
+
 import Iconify from '../components/iconify';
 // sections
 import {
@@ -22,11 +25,19 @@ import {
 
 export default function DashboardAppPage() {
   const theme = useTheme();
+  const [analytic, setanalytic] = useState({});
 
+  const { data: analyticsdata, error: analyticerror, isLoading: analyticloading } = useGetAdminAnalyticesQuery(null);
+
+  useEffect(() => {
+    if (analyticsdata) {
+      setanalytic(analyticsdata?.data);
+    }
+  }, [analyticsdata]);
   return (
     <>
       <Helmet>
-        <title> Dashboard | Minimal UI </title>
+        <title> Dashboard | Talent Hub </title>
       </Helmet>
 
       <Container maxWidth="xl">
@@ -35,22 +46,27 @@ export default function DashboardAppPage() {
         </Typography>
 
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Weekly Sales" total={714000} icon={'ant-design:android-filled'} />
+          <Grid item xs={12} sm={6} md={4}>
+            <AppWidgetSummary title="Total Users" total={analytic?.user ?? 0} icon={'ri:team-fill'} />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="New Users" total={1352831} color="info" icon={'ant-design:apple-filled'} />
+          <Grid item xs={12} sm={6} md={4}>
+            <AppWidgetSummary
+              title="Total Bookings"
+              total={analytic?.bookings ?? 0}
+              color="info"
+              icon={'teenyicons:appointments-solid'}
+            />
           </Grid>
 
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Item Orders" total={1723315} color="warning" icon={'ant-design:windows-filled'} />
+          <Grid item xs={12} sm={6} md={4}>
+            <AppWidgetSummary
+              title="Total Transactions"
+              total={analytic?.transactions ?? 0}
+              color="warning"
+              icon={'icon-park-solid:transaction'}
+            />
           </Grid>
-
-          <Grid item xs={12} sm={6} md={3}>
-            <AppWidgetSummary title="Bug Reports" total={234} color="error" icon={'ant-design:bug-filled'} />
-          </Grid>
-
           <Grid item xs={12} md={6} lg={8}>
             <AppWebsiteVisits
               title="Website Visits"
