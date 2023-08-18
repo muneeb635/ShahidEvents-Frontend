@@ -10,9 +10,6 @@ export const AdmanPanalAPI = createApi({
     getAllUser: builder.query({
       query: () => `/admin/users/all`,
     }),
-
-    // transformResponse: (response: { result: any }) => response.result,
-    //
     userStatus: builder.mutation({
       query: (Body: any) => {
         return {
@@ -26,10 +23,18 @@ export const AdmanPanalAPI = createApi({
     getAllCatagories: builder.query({
       query: () => `/categories/all`,
     }),
+    getAllTransactions: builder.query({
+      query: () => `/admin/transactions/all`,
+    }),
   }),
 });
 
 // Export hooks for usage in functional components, which are
 // auto-generated based on the defined endpoints
-export const { useGetAdminAnalyticesQuery, useGetAllUserQuery, useUserStatusMutation, useGetAllCatagoriesQuery } =
-  AdmanPanalAPI;
+export const {
+  useGetAdminAnalyticesQuery,
+  useGetAllUserQuery,
+  useUserStatusMutation,
+  useGetAllCatagoriesQuery,
+  useGetAllTransactionsQuery,
+} = AdmanPanalAPI;
