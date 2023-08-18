@@ -48,7 +48,7 @@ export default function UserPage() {
               <Table>
                 <TableHead>
                   <TableRow>
-                    <TableCell>Transactions ID</TableCell>
+                    <TableCell align="left">Transactions ID</TableCell>
                     <TableCell align="left">Amount</TableCell>
                     <TableCell align="left">Status</TableCell>
                     <TableCell align="left">Create Date</TableCell>
@@ -58,13 +58,7 @@ export default function UserPage() {
                 <TableBody>
                   {allTransactions?.map((trans, ind) => (
                     <TableRow hover key={ind}>
-                      <TableCell component="th" scope="row" padding="none">
-                        <Stack direction="row" alignItems="center" spacing={2}>
-                          <Typography variant="subtitle2" noWrap>
-                            {trans?.id ?? 0}
-                          </Typography>
-                        </Stack>
-                      </TableCell>
+                      <TableCell align="left">{trans?.id ?? 0}</TableCell>
 
                       <TableCell align="left">{trans?.amount ?? '0'}</TableCell>
 
