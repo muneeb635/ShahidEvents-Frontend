@@ -14,28 +14,33 @@ const navConfig = [
   {
     title: 'user',
     path: '/dashboard/user',
-    icon: icon('ic_user'),
+    icon: icon('user'),
   },
   {
     title: 'transactions',
     path: '/dashboard/transactions',
-    icon: icon('ic_user'),
+    icon: icon('transactions'),
   },
   {
-    title: 'product',
+    title: 'notification',
+    path: '/dashboard/notification',
+    icon: icon('notification'),
+  },
+  {
+    title: 'Video Gallery',
     path: '/dashboard/products',
-    icon: icon('ic_cart'),
+    icon: icon('video'),
   },
   {
     title: 'blog',
     path: '/dashboard/blog',
     icon: icon('ic_blog'),
   },
-  {
-    title: 'login',
-    path: '/login',
-    icon: icon('ic_lock'),
-  },
+  // {
+  //   title: 'login',
+  //   path: '/login',
+  //   icon: icon('ic_lock'),
+  // },
   // {
   //   title: 'Not found',
   //   path: '/404',

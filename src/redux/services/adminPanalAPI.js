@@ -16,7 +16,6 @@ export const AdmanPanalAPI = createApi({
           url: `/admin/status`,
           method: 'PUT',
           body: Body,
-          // headers: { 'Content-Type': 'application/json' },
         };
       },
     }),
@@ -25,6 +24,9 @@ export const AdmanPanalAPI = createApi({
     }),
     getAllTransactions: builder.query({
       query: () => `/admin/transactions/all`,
+    }),
+    getVideoByCatagoury: builder.query({
+      query: (id) => `/admin/category-videos?id=${id}`,
     }),
   }),
 });
@@ -37,4 +39,5 @@ export const {
   useUserStatusMutation,
   useGetAllCatagoriesQuery,
   useGetAllTransactionsQuery,
+  useGetVideoByCatagouryQuery,
 } = AdmanPanalAPI;
