@@ -38,7 +38,7 @@ const navConfig = [
   },
   {
     title: 'All Maquees',
-    path: '/dashboard/blog',
+    path: '/dashboard/allmarquee',
     icon: icon('all-marquee'),
   },
   {

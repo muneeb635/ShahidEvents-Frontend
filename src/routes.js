@@ -11,6 +11,7 @@ import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
 import AddMarquee from './pages/addMarquee';
+import AllMarquee from './pages/allMarquees';
 import AddEvent from './pages/addEvent';
 import DashboardAppPage from './pages/DashboardAppPage';
 
@@ -35,6 +36,7 @@ export default function Router() {
         { path: 'blog', element: <BlogPage /> },
         { path: 'addmarquee', element: <AddMarquee /> },
         { path: 'addevent', element: <AddEvent /> },
+        { path: 'allmarquee', element: <AllMarquee /> },
       ],
     },
     {
