@@ -1,8 +1,8 @@
 // ----------------------------------------------------------------------
 
 const account = {
-  displayName: 'Talent Hub',
-  email: 'info@talenthub.com',
+  displayName: 'Shahid Events',
+  email: 'info@Shahidevents.com',
   photoURL: '/assets/images/avatars/avatar_default.jpg',
 };
 

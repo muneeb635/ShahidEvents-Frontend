@@ -5,7 +5,7 @@ import { useTheme } from '@mui/material/styles';
 import { Grid, Container, Typography } from '@mui/material';
 // components
 import { useEffect, useState } from 'react';
-import { useGetAdminAnalyticesQuery } from '../redux/services/adminPanalAPI';
+import { useGetAdminAnalyticesQuery, useGettestQuery } from '../redux/services/adminPanalAPI';
 
 import Iconify from '../components/iconify';
 // sections
@@ -28,7 +28,13 @@ export default function DashboardAppPage() {
   const [analytic, setanalytic] = useState({});
 
   const { data: analyticsdata, error: analyticerror, isLoading: analyticloading } = useGetAdminAnalyticesQuery(null);
+  const { data, error, isLoading } = useGettestQuery(null);
 
+  useEffect(() => {
+    if (data) {
+      console.log('object', data);
+    }
+  });
   useEffect(() => {
     if (analyticsdata) {
       setanalytic(analyticsdata?.data);
@@ -37,7 +43,7 @@ export default function DashboardAppPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | Talent Hub </title>
+        <title> Dashboard | Shahid Events </title>
       </Helmet>
 
       <Container maxWidth="xl">

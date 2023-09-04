@@ -10,6 +10,8 @@ import Notification from './pages/Notification';
 import LoginPage from './pages/LoginPage';
 import Page404 from './pages/Page404';
 import ProductsPage from './pages/ProductsPage';
+import AddMarquee from './pages/addMarquee';
+import AddEvent from './pages/addEvent';
 import DashboardAppPage from './pages/DashboardAppPage';
 
 // ----------------------------------------------------------------------
@@ -31,6 +33,8 @@ export default function Router() {
         { path: 'notification', element: <Notification /> },
         { path: 'products', element: <ProductsPage /> },
         { path: 'blog', element: <BlogPage /> },
+        { path: 'addmarquee', element: <AddMarquee /> },
+        { path: 'addevent', element: <AddEvent /> },
       ],
     },
     {

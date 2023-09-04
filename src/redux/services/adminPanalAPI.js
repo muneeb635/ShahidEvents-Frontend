@@ -2,7 +2,8 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const AdmanPanalAPI = createApi({
   reducerPath: 'AdmanPanalAPI',
-  baseQuery: fetchBaseQuery({ baseUrl: 'https://talent-hub.onrender.com' }),
+  // baseQuery: fetchBaseQuery({ baseUrl: 'https://talent-hub.onrender.com' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://127.0.0.1:8000/api' }),
   endpoints: (builder) => ({
     getAdminAnalytices: builder.query({
       query: () => `/admin/user-count`,
@@ -28,6 +29,9 @@ export const AdmanPanalAPI = createApi({
     getVideoByCatagoury: builder.query({
       query: (id) => `/admin/category-videos?id=${id}`,
     }),
+    gettest: builder.query({
+      query: () => `/articles`,
+    }),
   }),
 });
 
@@ -40,4 +44,5 @@ export const {
   useGetAllCatagoriesQuery,
   useGetAllTransactionsQuery,
   useGetVideoByCatagouryQuery,
+  useGettestQuery,
 } = AdmanPanalAPI;

@@ -11,41 +11,46 @@ const navConfig = [
     path: '/dashboard/app',
     icon: icon('ic_analytics'),
   },
+  // {
+  //   title: 'user',
+  //   path: '/dashboard/user',
+  //   icon: icon('user'),
+  // },
+  // {
+  //   title: 'transactions',
+  //   path: '/dashboard/transactions',
+  //   icon: icon('transactions'),
+  // },
+  // {
+  //   title: 'notification',
+  //   path: '/dashboard/notification',
+  //   icon: icon('notification'),
+  // },
+  // {
+  //   title: 'Video Gallery',
+  //   path: '/dashboard/products',
+  //   icon: icon('video'),
+  // },
   {
-    title: 'user',
-    path: '/dashboard/user',
-    icon: icon('user'),
+    title: 'Add Marquee',
+    path: '/dashboard/addmarquee',
+    icon: icon('add-marquee'),
   },
   {
-    title: 'transactions',
-    path: '/dashboard/transactions',
-    icon: icon('transactions'),
+    title: 'All Maquees',
+    path: '/dashboard/blog',
+    icon: icon('all-marquee'),
   },
   {
-    title: 'notification',
-    path: '/dashboard/notification',
-    icon: icon('notification'),
+    title: 'Add Event',
+    path: '/dashboard/addevent',
+    icon: icon('add-event'),
   },
   {
-    title: 'Video Gallery',
-    path: '/dashboard/products',
-    icon: icon('video'),
-  },
-  {
-    title: 'blog',
+    title: 'View Event',
     path: '/dashboard/blog',
     icon: icon('ic_blog'),
   },
-  // {
-  //   title: 'login',
-  //   path: '/login',
-  //   icon: icon('ic_lock'),
-  // },
-  // {
-  //   title: 'Not found',
-  //   path: '/404',
-  //   icon: icon('ic_disabled'),
-  // },
 ];
 
 export default navConfig;
